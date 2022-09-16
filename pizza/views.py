@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.forms import formset_factory
 
 from pizza.forms import MultiplePizzaForm, PizzaForm
 
@@ -32,3 +33,11 @@ def order(request):
     else:
         form= PizzaForm()
         return render(request,'pizza/order.html',{'pizzaform':form,"multiple_form":multiple_form})
+    
+    
+def pizzas(request):
+    number_of_pizzas=2
+    filled_multiple_pizza_form=MultiplePizzaForm(request.GET)
+    if filled_multiple_pizza_form.is_valid():
+        number_of_pizzas =filled_multiple_pizza_form.cleaned_dat.get('number')
+    PizzaFormSet=formset_factory(PizzaForm,extra=number_of_pizzas)
