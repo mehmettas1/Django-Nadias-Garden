@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.forms import formset_factory
-
+from import
 from pizza.forms import MultiplePizzaForm, PizzaForm
 
 # Create your views here.
@@ -52,3 +52,23 @@ def pizzas(request):
             messages.warning(request,'Order was not created , pleaser try again')
             
         return render(request,'pizza/pizzas.html',{'formset':formset})
+    
+    else:
+        return render(request,'pizza/pizzas.html',{'formset':formset})
+    
+    
+def edit_order(request,pk):
+    pizza = Pizza.objects.get(pk=pk)
+    form =PizzaForm(instance=pizza)
+    if request.method=='POST':
+        filled_form=PizzaForm(request.POST,instance=pizza)
+        if filled_form.is_valid():
+            filled_form.save()
+            form=filled_form
+            messages.success(request,'order has been updated')
+        
+        return render(request,'pizza/edit_order.html',{'pizzaform':form,'pizza':pizza})
+            
+    return render(request,'pizza/edit_order.html',{'pizzaform':form,'pizza':pizza})
+    
+    
