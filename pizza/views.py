@@ -41,7 +41,7 @@ def pizzas(request):
     if filled_multiple_pizza_form.is_valid():
         number_of_pizzas =filled_multiple_pizza_form.cleaned_dat.get('number')
     PizzaFormSet=formset_factory(PizzaForm,extra=number_of_pizzas)
-    formser = PizzaFormSet()
+    formset = PizzaFormSet()
     if request.method=="POST":
         filled_formset=PizzaFormSet(request.POST)
         if filled_formset.is_valid():
@@ -50,3 +50,5 @@ def pizzas(request):
             messages.success(request,'Pizzas have been   ordered')
         else:
             messages.warning(request,'Order was not created , pleaser try again')
+            
+        return render(request,'pizza/pizzas.html',{'formset':formset})
