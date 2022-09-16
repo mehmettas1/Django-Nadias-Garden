@@ -23,4 +23,12 @@ def order(request):
 
             filled_form = PizzaForm()
         else:
-            created_pizza_pk=
+            created_pizza_pk=None
+            messages.warning(request,'Pizza order failed,try again')
+            
+        return render(request,'pizza/order.html',{'created_pizza_pk':created_pizza_pk,'pizzaform':filled_form,"multiple_form":multiple_form})
+    
+    
+    else:
+        form= PizzaForm()
+        return render(request,'pizza/order.html',{'pizzaform':form,"multiple_form":multiple_form})
