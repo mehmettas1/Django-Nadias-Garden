@@ -1,0 +1,38 @@
+{% extends 'pizza/base.html' %}
+{% block body %}
+<div class="container">
+<h1>Order pizza</h1>
+<div class="messages">
+{% if messages %}
+<div class="">
+{% for message in messages %}
+<p{% if message.tags %} class="text-center alert alert-{{message.tags }}" {% endif %}>
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important:{% endif %}
+{{ message }}
+</p>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+</div>
+<div style="text-align: center">
+{% if created_pizza_pk %}
+<button><a href="{% url 'edit_order' created_pizza_pk %}">Edit Your
+Order</a></button><br>
+{% endif %}
+</div>
+<div>
+<form action="{% url 'order' %}" method="POST">
+{% csrf_token %}
+{{ pizzaform.as_p }}
+<input type="submit" value="Order Pizza">
+</form>
+<br><br>
+Want more than one pizza?
+<form action="{% url 'pizzas' %}", method="GET">
+{{ multiple_form.as_p }}
+<input type="submit" value="Get Pizzas">
+</form>
+</div>
+</div>
+{% endblock %}
