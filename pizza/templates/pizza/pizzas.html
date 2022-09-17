@@ -1,24 +1,28 @@
 {% extends 'pizza/base.html' %}
 {% block body %}
 <div class="container">
+<h1>Order Pizzas</h1>
 <div class="messages">
 {% if messages %}
-<div class="">
+    <div class="">
 {% for message in messages %}
-<p{% if message.tags %} class="text-center alert alert-{{
-message.tags }}" {% endif %}>
-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important:{% endif %}
-{{ message }}
-</p>
+    <p {% if message.tags %} class="text-center alert alert-{{ message.tags }}" {% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important:{% endif %}
+        {{ message }}
+    </p>
 {% endfor %}
-</ul>
-</div>
-{% endif %}
-</div>
-<form action="{% url 'edit_order' pizza.id %}" method="post">
-{% csrf_token %}
-{{ pizzaform.as_p }}
-<input type="submit" value="Edit Order">
-</form>
-</div>
-{% endblock body %}
+    </ul>
+    </div>
+    {% endif %}
+    </div>
+    <form action="{% url 'pizzas' %}" method="POST">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset %}
+    {{ form }}
+    <br><br>
+    {% endfor %}
+    <input type="submit" value="Order Pizzas" />
+    </form>
+    </div>
+    {% endblock body %}

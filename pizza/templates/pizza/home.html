@@ -1,6 +1,14 @@
 {% extends 'pizza/base.html' %}
- {% block body %}
- {% load static %}
- <img style="background-size: cover;" src="{% static 'pizza/nandiasgarden.jpg' %}"
-class="img-fluid" alt="Nandia's Garden">
+{% block body %}
+{% load static %}
+    <h1>ORDERS</h1>
+    <ul>
+        {% for pizza in pizzas  %}
+            <li>
+                {{ pizza }}
+            </li>
+        {% endfor %}
+    </ul>
+    <img style="background-size: cover;" src="{% static 'pizza/nandiasgarden.jpg' %}"
+    class="img-fluid" alt="Nandia's Garden">
 {% endblock body %}
